@@ -14,10 +14,10 @@ export default function GenreCard({ genreId, genreName, movies }: GenreCardProps
   return (
     <div
       onClick={() => navigate(`/genre/${genreId}`)}
-      className="cursor-pointer bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform"
+      className="cursor-pointer bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform "
     >
       {/* Top: 4 Images in a grid */}
-      <div className="grid grid-cols-2 grid-rows-2 h-60 w-full gap-1">
+      <div className="grid grid-cols-2 grid-rows-2 h-70 w-full gap-1">
         {movies.slice(0, 4).map((movie) => (
           <img
             key={movie.id}

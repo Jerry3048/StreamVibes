@@ -9,16 +9,18 @@ export default function Genres() {
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
   // ✅ Responsive ITEMS_PER_PAGE based on screen size
-  useEffect(() => {
-    const updateItemsPerPage = () => {
-      if (window.innerWidth < 640) {
-        setItemsPerPage(2); // small
-      } else if (window.innerWidth < 1024) {
-        setItemsPerPage(3); // medium
-      } else {
-        setItemsPerPage(6); // large
-      }
-    };
+ useEffect(() => {
+  const updateItemsPerPage = () => {
+    if (window.innerWidth < 640) {
+      setItemsPerPage(2); // small (sm)
+    } else if (window.innerWidth < 1024) {
+      setItemsPerPage(3); // medium (md)
+    } else if (window.innerWidth < 1280) {
+      setItemsPerPage(4); // large (lg)
+    } else {
+      setItemsPerPage(6); // extra large (xl and above)
+    }
+  };
 
     updateItemsPerPage(); // run once on mount
     window.addEventListener("resize", updateItemsPerPage);
@@ -54,7 +56,7 @@ export default function Genres() {
 
 
   return (
-    <div className="py-5 relative">
+    <div className="relative">
       <div className="md:flex items-center justify-between w-[95%] mx-auto mb-4 space-y-2">
       <div className="text-center md:text-left"> 
          <h2 className="text-2xl font-bold">Explore Our Wide Variety Of Categories</h2>
@@ -96,7 +98,7 @@ export default function Genres() {
       </div>
 
       {/* Genre Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2  xl:gap-6 flex-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2  xl:gap-6 flex-1">
         {visibleGenres.map((genre) => (
           <GenreCard
             key={genre.id}

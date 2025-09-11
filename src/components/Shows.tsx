@@ -1,48 +1,46 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/MovieCard"; // ✅ reuse card for shows too
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import type { Movie } from "../types";
+import type { Movie } from "../types"; // you can rename later to `Media`
 
 const API_KEY = "c83a544dff93b9547ab40c6699cf9c47";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
-function Movies() {
-  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
-  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
-  const [newReleaseMovies, setNewReleaseMovies] = useState<Movie[]>([]);
-  const [mustWatchMovies, setMustWatchMovies] = useState<Movie[]>([]);
-  // const [itemsPerPage, setItemsPerPage] = useState(6);
+function Shows() {
+  const [popularShows, setPopularShows] = useState<Movie[]>([]);
+  const [trendingShows, setTrendingShows] = useState<Movie[]>([]);
+  const [airingToday, setAiringToday] = useState<Movie[]>([]);
+  const [topRatedShows, setTopRatedShows] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
- const fetchMovies = async () => {
-  setLoading(true);
-  try {
-    // 🎲 generate random page for each category
-    const randomPage = (max: number) => Math.floor(Math.random() * max) + 1;
+  const fetchShows = async () => {
+    setLoading(true);
+    try {
+      const randomPage = (max: number) => Math.floor(Math.random() * max) + 1;
 
-       const [popularRes, trendingRes, newReleaseRes, mustWatchRes] =
-      await Promise.all([
-        axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${randomPage(500)}`),
-        axios.get(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&page=${randomPage(50)}`),
-        axios.get(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${randomPage(50)}`),
-        axios.get(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${randomPage(500)}`),
-      ]);
+      const [popularRes, trendingRes, airingTodayRes, topRatedRes] =
+        await Promise.all([
+          axios.get(`${BASE_URL}/tv/popular?api_key=${API_KEY}&page=${randomPage(500)}`),
+          axios.get(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${randomPage(50)}`),
+          axios.get(`${BASE_URL}/tv/airing_today?api_key=${API_KEY}&page=${randomPage(30)}`),
+          axios.get(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}&page=${randomPage(50)}`),
+        ]);
 
-    setPopularMovies(popularRes.data.results || []);
-    setTrendingMovies(trendingRes.data.results || []);
-    setNewReleaseMovies(newReleaseRes.data.results || []);
-    setMustWatchMovies(mustWatchRes.data.results || []);
-  } catch (err) {
-    console.error("Error fetching movies", err);
-  } finally {
-    setLoading(false);
-  }
-};
+      setPopularShows(popularRes.data.results || []);
+      setTrendingShows(trendingRes.data.results || []);
+      setAiringToday(airingTodayRes.data.results || []);
+      setTopRatedShows(topRatedRes.data.results || []);
+    } catch (err) {
+      console.error("Error fetching TV shows", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchMovies();
+    fetchShows();
   }, []);
 
   if (loading) {
@@ -53,48 +51,48 @@ function Movies() {
     );
   }
 
-  const handleMovieClick = (id: number) => {
-    window.open(`https://www.themoviedb.org/movie/${id}`, "_blank");
+  const handleShowClick = (id: number) => {
+    window.open(`https://www.themoviedb.org/tv/${id}`, "_blank");
   };
 
   return (
     <div className="p-6 min-h-screen text-white space-y-12 border-1 w-[95%] mx-auto rounded-lg border-gray-800">
-      <button>
-        <h1 className="text-3xl font-bold mb-6 text-center bg-red-700 p-4 rounded-lg">Movies</h1>
+        <button>
+        <h1 className="text-3xl font-bold mb-6 text-center bg-red-700 p-4 rounded-lg">Shows</h1>
         </button>
-      <MovieSection title=" Popular Movies" movies={popularMovies} onMovieClick={handleMovieClick} variant="default" />
-      <MovieSection title="Trending Movies" movies={trendingMovies} onMovieClick={handleMovieClick} variant="trending" />
-      <MovieSection title="New Releases" movies={newReleaseMovies} onMovieClick={handleMovieClick} variant="new" />
-      <MovieSection title="Must Watch" movies={mustWatchMovies} onMovieClick={handleMovieClick} variant="must" />
+      <ShowSection title="Popular Shows" shows={popularShows} onMovieClick={handleShowClick} variant="default" />
+      <ShowSection title="Trending Shows" shows={trendingShows} onMovieClick={handleShowClick} variant="trending" />
+      <ShowSection title="Airing Today" shows={airingToday} onMovieClick={handleShowClick} variant="new" />
+      <ShowSection title="Top Rated Shows" shows={topRatedShows} onMovieClick={handleShowClick} variant="must" />
     </div>
   );
 }
 
-type MovieSectionProps = {
+type ShowSectionProps = {
   title: string;
-  movies: Movie[];
+  shows: Movie[];
   onMovieClick: (id: number) => void;
   variant: "default" | "trending" | "new" | "must";
 };
 
-function MovieSection({ title, movies, onMovieClick, variant }: MovieSectionProps) {
+function ShowSection({ title, shows, onMovieClick, variant }: ShowSectionProps) {
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
   useEffect(() => {
     const updateItemsPerPage = () => {
       if (window.innerWidth < 640) {
-        setItemsPerPage(2); // small (sm)
+        setItemsPerPage(2);
       } else if (window.innerWidth < 1024) {
-        setItemsPerPage(3); // medium (md)
+        setItemsPerPage(3);
       } else if (window.innerWidth < 1280) {
-        setItemsPerPage(4); // large (lg)
+        setItemsPerPage(4);
       } else {
-        setItemsPerPage(5); // extra large (xl and above)
+        setItemsPerPage(5);
       }
     };
 
-    updateItemsPerPage(); // run once on mount
+    updateItemsPerPage();
     window.addEventListener("resize", updateItemsPerPage);
 
     return () => {
@@ -102,7 +100,7 @@ function MovieSection({ title, movies, onMovieClick, variant }: MovieSectionProp
     };
   }, []);
 
-  const totalPages = Math.ceil(movies.length / itemsPerPage);
+  const totalPages = Math.ceil(shows.length / itemsPerPage);
   const currentPage = Math.floor(startIndex / itemsPerPage);
 
   const handleNext = () => {
@@ -117,10 +115,10 @@ function MovieSection({ title, movies, onMovieClick, variant }: MovieSectionProp
     }
   };
 
-  const visibleMovies = movies.slice(startIndex, startIndex + itemsPerPage);
+  const visibleShows = shows.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <section>
+    <section >
       <div className="flex flex-col sm:flex-row sm:justify-between md:items-center mb-6">
         <h2 className="text-2xl font-bold">{title}</h2>
         <div className="bg-gray-950 p-3 rounded-lg text-white flex items-center space-x-3 justify-center">
@@ -155,7 +153,7 @@ function MovieSection({ title, movies, onMovieClick, variant }: MovieSectionProp
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {visibleMovies.map((movie) => (
+        {visibleShows.map((movie) => (
           <MovieCard
             key={movie.id}
             title={movie.title}
@@ -173,4 +171,4 @@ function MovieSection({ title, movies, onMovieClick, variant }: MovieSectionProp
   );
 }
 
-export default Movies;
+export default Shows;

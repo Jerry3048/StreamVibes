@@ -19,17 +19,21 @@ export interface Movie {
 }
 
 interface MovieStore {
-  // ✅ Genres & Movies by Genre
+  apiKey: string;
+  imgBase: string;
+
   genres: Genre[];
   moviesByGenre: Record<number, Movie[]>;
   fetchGenresAndMovies: () => Promise<void>;
 
-  // ✅ Trending Posters for Backdrop
   trendingPosters: string[];
   fetchTrendingPosters: (maxImages: number) => Promise<void>;
 }
 
 export const useMovieStore = create<MovieStore>((set) => ({
+  apiKey: API_KEY,
+  imgBase: IMG_BASE,
+
   genres: [],
   moviesByGenre: {},
   trendingPosters: [],

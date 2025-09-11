@@ -57,7 +57,7 @@ export default function MovieBackdrop() {
         <img
           src={Logo}
           alt="Logo"
-          className="w-40 h-40 md:w-60 md:h-60 xl:w-90 xl:h-90 object-contain mb-20 mt-20"
+          className="w-40 h-40 md:w-60 md:h-60 xl:w-90 xl:h-90 object-contain mb-20 md:mb-10 mt-20"
         />
         <div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
