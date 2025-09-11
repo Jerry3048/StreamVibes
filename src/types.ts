@@ -8,6 +8,9 @@ export interface Movie {
   vote_average: number;
   popularity: number;
   vote_count: number;
+  backdrop_path: string | null;
+  overview: string;
+
 }
 
 export interface Genre {

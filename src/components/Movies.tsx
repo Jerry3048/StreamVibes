@@ -97,7 +97,7 @@ function MoviesAndShows() {
       {/* Movies Section */}
       {(activeTab === "movies" || window.innerWidth >= 640) && (
         <div className="border border-gray-700 rounded-xl p-4 space-y-12 relative">
-        <h1 className="absolute -top-4 left-4 bg-gray-900 px-3 py-1 text-lg font-semibold rounded-md ">
+        <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md ">
           Movies
         </h1>
           <MovieSection
@@ -126,7 +126,7 @@ function MoviesAndShows() {
       {/* Shows Section */}
       {(activeTab === "shows" || window.innerWidth >= 640) && (
          <div className="border border-gray-700 rounded-xl p-4 space-y-12 relative">
-        <h1 className="absolute -top-4 left-4 bg-gray-900 px-3 py-1 text-lg font-semibold rounded-md">
+        <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md">
           Shows
         </h1>
           <MovieSection

@@ -31,7 +31,7 @@ export default function MovieBackdrop() {
   }, [maxImages, fetchTrendingPosters]);
 
   return (
-    <div className="relative h-screen md:h-full w-full overflow-hidden">
+    <div className="relative h-screen lg:h-full w-full overflow-hidden">
       {/* Background Grid */}
       <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-10 h-full w-full">
         {trendingPosters.map((img, i) => (
@@ -63,7 +63,7 @@ export default function MovieBackdrop() {
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
             The Best Streaming Experience
           </h1>
-          <p className="text-md md:text-lg mb-6 md:max-w-[80%] mx-auto">
+          <p className="text-md md:text-lg mb-6 md:max-w-[90%] mx-auto">
             StreamVibe is the best streaming experience for watching your
             favorite movies and shows on demand, anytime, anywhere. With
             StreamVibe, you can enjoy a wide variety of content, including the

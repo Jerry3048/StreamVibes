@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import GenrePage from "./pages/GenrePage.tsx";
-import MovieShows from "./pages/MovieShows"; 
+import MovieShows from "./pages/Movie-ShowsPage.tsx"; 
 // import MoviePage from "./pages/MoviePage";     // Create this component
 // import ShowPage from "./pages/ShowPage";       // Create this component
 
