@@ -1,5 +1,4 @@
 import Movies from "../components/Movies"
-import Shows from "../components/Shows"
 import Background from "../components/Background"
 import GenresSection from "../components/GenreSection"
 import SupportedDevices from "../components/SupportedDevices"
@@ -17,7 +16,6 @@ function Home() {
       <Pricing />
       <TrialBG />
       <Movies />
-      <Shows />
       <Footer />
     </div>
   )

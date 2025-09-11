@@ -35,7 +35,7 @@ export default function Navbar() {
           </li>
           <li>
             <NavLink
-              to="/movies"
+              to="/movies-shows"
               className={({ isActive }) =>
                 `px-3 py-2 rounded-lg transition ${
                   isActive ? "bg-gray-700" : "hover:bg-gray-500"
