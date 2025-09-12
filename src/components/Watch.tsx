@@ -76,7 +76,7 @@ function Watch() {
       {/* Movie details */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 pb-32">
         <h1 className="text-4xl font-bold">{currentMovie.title}</h1>
-        <p className="mt-4 text-lg opacity-90 line-clamp-4 max-w-2xl">
+        <p className="mt-4 text-lg opacity-90 line-clamp-4 max-w-[80%]">
           {currentMovie.overview}
         </p>
 

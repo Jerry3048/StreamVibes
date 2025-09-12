@@ -1,63 +1,77 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import { useMovieStore, type Movie } from "../store/MovieStore";
+import { useMovieStore, type Movie, type TvShow } from "../store/MovieStore";
 
 export default function GenrePage() {
-  const { genreId } = useParams<{ genreId: string }>();
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const { genreId, type } = useParams<{ genreId: string; type: "movie" | "tv" }>();
+  const [items, setItems] = useState<(Movie | TvShow)[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const { genres, fetchGenresAndMovies, apiKey, imgBase } = useMovieStore();
+  const {
+    movieGenres,
+    tvGenres,
+    fetchGenresAndMovies,
+    fetchGenresAndTvShows,
+    apiKey,
+    imgBase,
+  } = useMovieStore();
 
-  const genreName =
-    genres.find((g) => g.id.toString() === genreId)?.name || "Movies";
+  const genres = type === "tv" ? tvGenres : movieGenres;
+  const genreName = genres.find((g) => g.id.toString() === genreId)?.name || "Browse";
 
   useEffect(() => {
-    const fetchGenreMovies = async () => {
+    const fetchGenreItems = async () => {
       try {
-        const res = await axios.get<{ results: Movie[]; total_pages: number }>(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`
+        const endpoint = type === "tv" ? "discover/tv" : "discover/movie";
+        const res = await axios.get<{ results: (Movie | TvShow)[]; total_pages: number }>(
+          `https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&with_genres=${genreId}&page=${page}`
         );
-        setMovies(res.data.results.filter((m) => m.poster_path));
+
+        setItems(res.data.results.filter((m) => m.poster_path));
         setTotalPages(res.data.total_pages);
       } catch (err) {
-        console.error("Error fetching genre movies:", err);
+        console.error("Error fetching genre items:", err);
       }
     };
 
-    fetchGenreMovies();
-  }, [genreId, page, apiKey]);
+    fetchGenreItems();
+  }, [genreId, page, apiKey, type]);
 
   useEffect(() => {
-    if (genres.length === 0) {
+    if (type === "movie" && movieGenres.length === 0) {
       fetchGenresAndMovies();
     }
-  }, [genres.length, fetchGenresAndMovies]);
+    if (type === "tv" && tvGenres.length === 0) {
+      fetchGenresAndTvShows();
+    }
+  }, [type, movieGenres.length, tvGenres.length, fetchGenresAndMovies, fetchGenresAndTvShows]);
 
   return (
     <div className="px-6 py-10">
-      <h1 className="text-3xl font-bold text-white mb-6">{genreName}</h1>
+      <h1 className="text-3xl font-bold text-white mb-6">{genreName} ({(type ?? "movie").toUpperCase()})</h1>
 
+      {/* Grid of items */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {movies.map((movie) => (
+        {items.map((item) => (
           <div
-            key={movie.id}
+            key={item.id}
             className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform"
           >
             <img
-              src={`${imgBase}${movie.poster_path}`}
-              alt={movie.title}
-              className="w-full h-80"
+              src={`${imgBase}${item.poster_path}`}
+              alt={"title" in item ? item.title : item.name}
+              className="w-full h-80 object-cover"
             />
             <div className="p-2 text-white text-sm font-semibold">
-              {movie.title}
+              {"title" in item ? item.title : item.name}
             </div>
           </div>
         ))}
       </div>
 
+      {/* Pagination */}
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}

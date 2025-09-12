@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "./MovieCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import type { Movie } from "../types";
 

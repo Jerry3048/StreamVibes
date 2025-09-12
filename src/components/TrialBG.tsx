@@ -47,7 +47,7 @@ export default function MovieBackdrop() {
       {/* Hero Section */}
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between text-white w-[90%] mx-auto z-20">
         <div className="text-center md:text-left max-w-2xl">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4">
+          <h1 className="text-xl sm:text-2xl xl:text-5xl font-bold mb-4">
             Start your free trial today!
           </h1>
           <p className="text-sm sm:text-base md:text-lg mb-6 text-gray-300">
@@ -56,7 +56,7 @@ export default function MovieBackdrop() {
           </p>
         </div>
 
-        <button className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-lg font-semibold transition">
+        <button className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-semibold transition">
           Start a Free Trial
         </button>
       </div>

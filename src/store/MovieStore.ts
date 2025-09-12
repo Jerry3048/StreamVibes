@@ -18,14 +18,31 @@ export interface Movie {
   vote_average: number;
 }
 
+export interface TvShow {
+  id: number;
+  name: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  overview: string;
+  first_air_date: string;
+  vote_average: number;
+}
+
 interface MovieStore {
   apiKey: string;
   imgBase: string;
 
-  genres: Genre[];
+  // Movies
+  movieGenres: Genre[];
   moviesByGenre: Record<number, Movie[]>;
   fetchGenresAndMovies: () => Promise<void>;
 
+  // TV Shows
+  tvGenres: Genre[];
+  tvByGenre: Record<number, TvShow[]>;
+  fetchGenresAndTvShows: () => Promise<void>;
+
+  // Trending posters
   trendingPosters: string[];
   fetchTrendingPosters: (maxImages: number) => Promise<void>;
 }
@@ -34,8 +51,10 @@ export const useMovieStore = create<MovieStore>((set) => ({
   apiKey: API_KEY,
   imgBase: IMG_BASE,
 
-  genres: [],
+  movieGenres: [],
   moviesByGenre: {},
+  tvGenres: [],
+  tvByGenre: {},
   trendingPosters: [],
 
   // ✅ Fetch genres + 4 movies each
@@ -58,9 +77,36 @@ export const useMovieStore = create<MovieStore>((set) => ({
         })
       );
 
-      set({ genres, moviesByGenre });
+      set({ movieGenres: genres, moviesByGenre });
     } catch (error) {
       console.error("Error fetching genres/movies:", error);
+    }
+  },
+
+  // ✅ Fetch genres + 4 TV shows each
+  fetchGenresAndTvShows: async () => {
+    try {
+      const resGenres = await axios.get<{ genres: Genre[] }>(
+        `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`
+      );
+      const genres = resGenres.data.genres;
+
+      const tvByGenre: Record<number, TvShow[]> = {};
+      await Promise.all(
+        genres.map(async (genre) => {
+          const res = await axios.get<{ results: TvShow[] }>(
+            `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&with_genres=${genre.id}&page=1`
+          );
+
+          tvByGenre[genre.id] = res.data.results
+            .filter((show) => show.poster_path)
+            .slice(0, 4);
+        })
+      );
+
+      set({ tvGenres: genres, tvByGenre });
+    } catch (error) {
+      console.error("Error fetching genres/TV shows:", error);
     }
   },
 

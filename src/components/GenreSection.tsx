@@ -4,37 +4,56 @@ import GenreCard from "./GenreCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function Genres() {
-  const { genres, moviesByGenre, fetchGenresAndMovies } = useMovieStore();
+  const {
+    movieGenres,
+    tvGenres,
+    moviesByGenre,
+    tvByGenre,
+    fetchGenresAndMovies,
+    fetchGenresAndTvShows,
+  } = useMovieStore();
+
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [showType, setShowType] = useState<"movie" | "tv">("movie");
 
-  // ✅ Responsive ITEMS_PER_PAGE based on screen size
- useEffect(() => {
-  const updateItemsPerPage = () => {
-    if (window.innerWidth < 640) {
-      setItemsPerPage(2); // small (sm)
-    } else if (window.innerWidth < 1024) {
-      setItemsPerPage(3); // medium (md)
-    } else if (window.innerWidth < 1280) {
-      setItemsPerPage(4); // large (lg)
-    } else {
-      setItemsPerPage(6); // extra large (xl and above)
-    }
-  };
-
-    updateItemsPerPage(); // run once on mount
-    window.addEventListener("resize", updateItemsPerPage);
-
-    return () => {
-      window.removeEventListener("resize", updateItemsPerPage);
+  // ✅ Responsive ITEMS_PER_PAGE
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerPage(2);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(3);
+      } else if (window.innerWidth < 1280) {
+        setItemsPerPage(4);
+      } else {
+        setItemsPerPage(6);
+      }
     };
+
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
   }, []);
 
+  // ✅ Fetch genres on mount
   useEffect(() => {
-    if (genres.length === 0) {
-      fetchGenresAndMovies();
-    }
-  }, [genres, fetchGenresAndMovies]);
+    if (movieGenres.length === 0) fetchGenresAndMovies();
+    if (tvGenres.length === 0) fetchGenresAndTvShows();
+  }, [movieGenres, tvGenres, fetchGenresAndMovies, fetchGenresAndTvShows]);
+
+  // ✅ Switch between movies and TV every 20s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowType((prev) => (prev === "movie" ? "tv" : "movie"));
+      setStartIndex(0); // reset to first page
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const genres = showType === "movie" ? movieGenres : tvGenres;
+  const dataByGenre = showType === "movie" ? moviesByGenre : tvByGenre;
 
   const totalPages = Math.ceil(genres.length / itemsPerPage);
   const currentPage = Math.floor(startIndex / itemsPerPage);
@@ -53,18 +72,22 @@ export default function Genres() {
 
   const visibleGenres = genres.slice(startIndex, startIndex + itemsPerPage);
 
-
-
   return (
     <div className="relative">
-      <div className="md:flex items-center justify-between w-[95%] mx-auto mb-4 space-y-2">
-      <div className="text-center md:text-left"> 
-         <h2 className="text-2xl font-bold">Explore Our Wide Variety Of Categories</h2>
-         <p>Whether you're looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new</p>
-      </div>
+      {/* Header */}
+      <div className="md:flex items-center justify-between w-full mx-auto mb-4 space-y-2">
+        <div className="text-center md:text-left">
+          <h2 className="text-2xl font-bold">
+            Explore {showType === "movie" ? "Movies" : "TV Shows"} Categories
+          </h2>
+          <p>
+            Whether you're looking for a comedy, a drama, or a documentary —
+            we’ve got {showType === "movie" ? "movies" : "shows"} for you.
+          </p>
+        </div>
 
+        {/* Pagination Controls */}
         <div className="bg-gray-950 p-4 rounded-lg text-white flex items-center space-x-3 justify-center w-fit mx-auto md:mx-0">
-          {/* Left Arrow */}
           <button
             onClick={handlePrev}
             disabled={currentPage === 0}
@@ -73,7 +96,6 @@ export default function Genres() {
             <FaArrowLeft />
           </button>
 
-          {/* Page Dots */}
           <div className="flex space-x-2">
             {Array.from({ length: totalPages }).map((_, idx) => (
               <span
@@ -86,7 +108,6 @@ export default function Genres() {
             ))}
           </div>
 
-          {/* Right Arrow */}
           <button
             onClick={handleNext}
             disabled={currentPage === totalPages - 1}
@@ -98,13 +119,14 @@ export default function Genres() {
       </div>
 
       {/* Genre Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2  xl:gap-6 flex-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 xl:gap-6 flex-1">
         {visibleGenres.map((genre) => (
           <GenreCard
             key={genre.id}
             genreId={genre.id}
             genreName={genre.name}
-            movies={moviesByGenre[genre.id] || []}
+            type={showType}
+            items={dataByGenre[genre.id] || []}
           />
         ))}
       </div>

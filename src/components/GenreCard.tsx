@@ -1,37 +1,38 @@
 import { useNavigate } from "react-router";
-import type { Movie } from "../store/MovieStore";
+import type { Movie, TvShow } from "../store/MovieStore";
 import { FaArrowRight } from "react-icons/fa";
 
 interface GenreCardProps {
   genreId: number;
   genreName: string;
-  movies: Movie[];
+  type: "movie" | "tv"; // 👈 add type so we know where to go
+  items: (Movie | TvShow)[];
 }
 
-export default function GenreCard({ genreId, genreName, movies }: GenreCardProps) {
+export default function GenreCard({ genreId, genreName, type, items }: GenreCardProps) {
   const navigate = useNavigate();
 
   return (
     <div
-      onClick={() => navigate(`/genre/${genreId}`)}
-      className="cursor-pointer bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform "
+      onClick={() => navigate(`/genre/${type}/${genreId}`)} // 👈 go to /genre/movie/:id or /genre/tv/:id
+      className="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform"
     >
-      {/* Top: 4 Images in a grid */}
+      {/* Preview posters */}
       <div className="grid grid-cols-2 grid-rows-2 h-70 w-full gap-1">
-        {movies.slice(0, 4).map((movie) => (
+        {items.slice(0, 4).map((item) => (
           <img
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            className="w-full h-full"
+            key={item.id}
+            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+            alt={"title" in item ? item.title : item.name}
+            className="w-full h-full object-cover"
           />
         ))}
       </div>
 
-      {/* Bottom: Genre Title */}
+      {/* Genre Name */}
       <div className="p-3 text-center bg-black text-white font-semibold flex items-center justify-between">
         {genreName}
-      <FaArrowRight className="text-white" />
+        <FaArrowRight className="text-white" />
       </div>
     </div>
   );
