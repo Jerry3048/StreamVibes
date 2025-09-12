@@ -62,7 +62,7 @@ export default function GenrePage() {
             <img
               src={`${imgBase}${item.poster_path}`}
               alt={"title" in item ? item.title : item.name}
-              className="w-full h-80 object-cover"
+              className="w-full h-80"
             />
             <div className="p-2 text-white text-sm font-semibold">
               {"title" in item ? item.title : item.name}

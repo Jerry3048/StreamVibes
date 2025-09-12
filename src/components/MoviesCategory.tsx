@@ -3,6 +3,8 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import type { Movie } from "../types";
+import { MovieGenresSection, TvGenresSection } from "./GenreSection";
+
 
 const API_KEY = "c83a544dff93b9547ab40c6699cf9c47";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -100,6 +102,7 @@ function MoviesAndShows() {
         <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md ">
           Movies
         </h1>
+          <MovieGenresSection />
           <MovieSection
             title="Popular Movies"
             movies={popularMovies}
@@ -129,6 +132,7 @@ function MoviesAndShows() {
         <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md">
           Shows
         </h1>
+          <TvGenresSection />
           <MovieSection
             title="Popular Shows"
             movies={popularShows}

@@ -1,23 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMovieStore } from "../store/MovieStore";
-import GenreCard from "./GenreCard";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import GenreSection from "./Genre";
 
-export default function Genres() {
-  const {
-    movieGenres,
-    tvGenres,
-    moviesByGenre,
-    tvByGenre,
-    fetchGenresAndMovies,
-    fetchGenresAndTvShows,
-  } = useMovieStore();
-
-  const [startIndex, setStartIndex] = useState(0);
+// ✅ Reusable hook for responsive itemsPerPage
+function useResponsiveItemsPerPage() {
   const [itemsPerPage, setItemsPerPage] = useState(6);
-  const [showType, setShowType] = useState<"movie" | "tv">("movie");
 
-  // ✅ Responsive ITEMS_PER_PAGE
   useEffect(() => {
     const updateItemsPerPage = () => {
       if (window.innerWidth < 640) {
@@ -36,100 +24,47 @@ export default function Genres() {
     return () => window.removeEventListener("resize", updateItemsPerPage);
   }, []);
 
-  // ✅ Fetch genres on mount
+  return itemsPerPage;
+}
+
+// 🎬 Movies Section
+export function MovieGenresSection() {
+  const { movieGenres, moviesByGenre, fetchGenresAndMovies } = useMovieStore();
+  const itemsPerPage = useResponsiveItemsPerPage();
+
   useEffect(() => {
     if (movieGenres.length === 0) fetchGenresAndMovies();
-    if (tvGenres.length === 0) fetchGenresAndTvShows();
-  }, [movieGenres, tvGenres, fetchGenresAndMovies, fetchGenresAndTvShows]);
-
-  // ✅ Switch between movies and TV every 20s
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShowType((prev) => (prev === "movie" ? "tv" : "movie"));
-      setStartIndex(0); // reset to first page
-    }, 20000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const genres = showType === "movie" ? movieGenres : tvGenres;
-  const dataByGenre = showType === "movie" ? moviesByGenre : tvByGenre;
-
-  const totalPages = Math.ceil(genres.length / itemsPerPage);
-  const currentPage = Math.floor(startIndex / itemsPerPage);
-
-  const handleNext = () => {
-    if (currentPage < totalPages - 1) {
-      setStartIndex(startIndex + itemsPerPage);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      setStartIndex(startIndex - itemsPerPage);
-    }
-  };
-
-  const visibleGenres = genres.slice(startIndex, startIndex + itemsPerPage);
+  }, [movieGenres, fetchGenresAndMovies]);
 
   return (
-    <div className="relative">
-      {/* Header */}
-      <div className="md:flex items-center justify-between w-full mx-auto mb-4 space-y-2">
-        <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold">
-            Explore {showType === "movie" ? "Movies" : "TV Shows"} Categories
-          </h2>
-          <p>
-            Whether you're looking for a comedy, a drama, or a documentary —
-            we’ve got {showType === "movie" ? "movies" : "shows"} for you.
-          </p>
-        </div>
+    <GenreSection
+      title="Explore Movie Categories"
+      description="Whether you're looking for a comedy, a drama, or an action-packed film — we’ve got movies for you."
+      genres={movieGenres}
+      dataByGenre={moviesByGenre}
+      itemsPerPage={itemsPerPage}
+      type="movie"
+    />
+  );
+}
 
-        {/* Pagination Controls */}
-        <div className="bg-gray-950 p-4 rounded-lg text-white flex items-center space-x-3 justify-center w-fit mx-auto md:mx-0">
-          <button
-            onClick={handlePrev}
-            disabled={currentPage === 0}
-            className="text-2xl disabled:opacity-30 bg-gray-500 p-1 rounded-lg"
-          >
-            <FaArrowLeft />
-          </button>
+// 📺 TV Shows Section
+export function TvGenresSection() {
+  const { tvGenres, tvByGenre, fetchGenresAndTvShows } = useMovieStore();
+  const itemsPerPage = useResponsiveItemsPerPage();
 
-          <div className="flex space-x-2">
-            {Array.from({ length: totalPages }).map((_, idx) => (
-              <span
-                key={idx}
-                className={`w-2 h-1 md:w-3 lg:w-4 rounded-full cursor-pointer ${
-                  idx === currentPage ? "bg-red-500" : "bg-gray-400"
-                }`}
-                onClick={() => setStartIndex(idx * itemsPerPage)}
-              ></span>
-            ))}
-          </div>
+  useEffect(() => {
+    if (tvGenres.length === 0) fetchGenresAndTvShows();
+  }, [tvGenres, fetchGenresAndTvShows]);
 
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages - 1}
-            className="text-2xl disabled:opacity-30 bg-gray-500 p-1 rounded-lg"
-          >
-            <FaArrowRight />
-          </button>
-        </div>
-      </div>
-
-      {/* Genre Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 xl:gap-6 flex-1">
-        {visibleGenres.map((genre) => (
-          <GenreCard
-            key={genre.id}
-            genreId={genre.id}
-            genreName={genre.name}
-            type={showType}
-            items={dataByGenre[genre.id] || []}
-          />
-        ))}
-      </div>
-    </div>
+  return (
+    <GenreSection
+      title="Explore TV Show Categories"
+      description="From sitcoms to documentaries — discover the TV shows you'll love."
+      genres={tvGenres}
+      dataByGenre={tvByGenre}
+      itemsPerPage={itemsPerPage}
+      type="tv"
+    />
   );
 }

@@ -24,7 +24,7 @@ export default function GenreCard({ genreId, genreName, type, items }: GenreCard
             key={item.id}
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
             alt={"title" in item ? item.title : item.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full"
           />
         ))}
       </div>
