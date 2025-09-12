@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import type { Movie } from "../types";
 import { MovieGenresSection, TvGenresSection } from "./GenreSection";
+import { useNavigate } from "react-router";
 
 
 const API_KEY = "c83a544dff93b9547ab40c6699cf9c47";
@@ -23,6 +24,8 @@ function MoviesAndShows() {
 
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"movies" | "shows">("movies"); // toggle for small screens
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -70,8 +73,12 @@ function MoviesAndShows() {
     );
   }
 
-  const handleCardClick = (id: number, type: "movie" | "tv") => {
-    window.open(`https://www.themoviedb.org/${type}/${id}`, "_blank");
+    const handleCardClick = (id: number, type: "movie" | "tv") => {
+    if (type === "movie") {
+      navigate(`/movie/${id}`);   // ✅ singular, matches App.tsx
+    } else {
+      navigate(`/tv/${id}`);      // will match ShowViewPage later
+    }
   };
 
   return (
