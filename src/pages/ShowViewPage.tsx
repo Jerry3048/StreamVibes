@@ -244,18 +244,18 @@ function ShowViewPage() {
             {/* Seasons & Episodes */}
             <div className="px-6 py-6 bg-black/30 rounded-lg">
               <h2 className="text-lg font-semibold mb-4">Seasons & Episodes</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="">
                 {show.seasons.map((season) => {
                   const isSelected = selectedSeason === season.season_number;
 
                   return (
                     <div
                       key={season.season_number}
-                      className="bg-black rounded-lg p-3 flex flex-col items-center text-center relative"
+                      className=" rounded-lg p-3 flex items-center text-center relative space-x-2 gap-2"
                     >
                       {/* Poster with play overlay */}
-                      <div
-                        className="relative cursor-pointer group"
+                     <div
+                        className="relative cursor-pointer  bg-black w-full"
                         onClick={() => {
                           if (isSelected) {
                             setSelectedSeason(null);
@@ -265,58 +265,57 @@ function ShowViewPage() {
                           }
                         }}
                       >
-                        <img
-                          src={
-                            season.poster_path
-                              ? `${IMG_BASE}${season.poster_path}`
-                              : "https://via.placeholder.com/150"
-                          }
-                          alt={season.name}
-                          className="w-24 h-32 object-cover rounded-md"
-                        />
-                        {/* Play overlay */}
-                        <div className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                          <FaPlay className="text-white text-2xl" />
+                        {/* Poster with play overlay */}
+                      <div className="flex space-x-4">
+                        {/* Parent must have group */}
+                        <div className="relative group">
+                          <img
+                            src={
+                              season.poster_path
+                                ? `${IMG_BASE}${season.poster_path}`
+                                : "https://via.placeholder.com/150"
+                            }
+                            alt={season.name}
+                            className="w-20 h-20 object-cover rounded-md"
+                          />
+                          <div className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                            <FaPlay className="text-white text-2xl" />
+                          </div>
+                        </div>
+
+                        {/* Season details */}
+                        <div className="text-left mt-3">
+                          <p className="text-sm font-semibold">{season.name}</p>
+                          <p className="text-sm font-semibold">Season: {season.season_number}</p>
+                          <p className="text-xs text-gray-400">{season.episode_count} Episodes</p>
                         </div>
                       </div>
 
-                      {/* Season details */}
-                      <p className="mt-2 text-sm font-semibold">
-                        {season.name}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {season.episode_count} Episodes
-                      </p>
 
-                      {/* Episodes list */}
-                      {isSelected && (
-                        <div className="mt-3 w-full text-left">
-                          <h3 className="text-sm text-gray-300 mb-2">
-                            Episodes
-                          </h3>
+                        {/* Episodes list directly under image */}
+                        {isSelected && (
+                          <div className="mt-3 text-left">
+                            <h3 className="text-sm text-gray-300 mb-2">Episodes</h3>
 
-                          {loadingSeason === season.season_number ? (
-                            <p className="text-gray-400 text-xs">
-                              Loading episodes...
-                            </p>
-                          ) : season.episodes ? (
-                            <ul className="space-y-1 text-xs text-gray-400">
-                              {season.episodes.map((ep) => (
-                                <li
-                                  key={ep.id}
-                                  className="px-2 py-1 bg-black/50 rounded hover:bg-red-500 hover:text-white cursor-pointer transition"
-                                >
-                                  Ep {ep.episode_number}: {ep.name}
-                                </li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <p className="text-gray-400 text-xs">
-                              Click to load episodes
-                            </p>
-                          )}
-                        </div>
-                      )}
+                            {loadingSeason === season.season_number ? (
+                              <p className="text-gray-400 text-xs">Loading episodes...</p>
+                            ) : season.episodes ? (
+                              <ul className="space-y-1 text-xs text-gray-400">
+                                {season.episodes.map((ep) => (
+                                  <li
+                                    key={ep.id}
+                                    className="px-2 py-1 bg-black/50 rounded hover:bg-red-500 hover:text-white cursor-pointer transition"
+                                  >
+                                    Episode {ep.episode_number}: {ep.name}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-gray-400 text-xs">Click to load episodes</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -390,7 +389,7 @@ function ShowViewPage() {
                               <p className="font-semibold">{rev.author}</p>
                               <div className="flex items-center space-x-2 text-sm bg-gray-900 px-2 py-1 rounded-3xl border border-gray-700 w-fit">
                                 {renderStars(
-                                  rev.author_details?.rating || 0
+                                  rev.author_details?.rating || show.vote_average
                                 )}
                                 <span className="text-white">
                                   {rev.author_details?.rating ??
@@ -541,13 +540,12 @@ function ShowViewPage() {
                 </div>
                 )}
             </div>
-            </div>
-
-   </div>
+          </div> 
+      </div>
    
       <TrialBG />
       <Footer />
-   </div>
+    </div>
   );
 }           
 
