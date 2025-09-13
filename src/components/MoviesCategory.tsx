@@ -73,13 +73,11 @@ function MoviesAndShows() {
     );
   }
 
-    const handleCardClick = (id: number, type: "movie" | "tv") => {
-    if (type === "movie") {
-      navigate(`/movie/${id}`);   // ✅ singular, matches App.tsx
-    } else {
-      navigate(`/tv/${id}`);      // will match ShowViewPage later
-    }
-  };
+ const handleCardClick = (name: string, type: "movie" | "tv") => {
+  const slug = name.toLowerCase().replace(/\s+/g, "-"); // "Inception" -> "inception"
+  navigate(`/${type}/${slug}`);
+};
+
 
   return (
     <div className="p-6 min-h-screen text-white space-y-12">
@@ -113,22 +111,22 @@ function MoviesAndShows() {
           <MovieSection
             title="Popular Movies"
             movies={popularMovies}
-            onCardClick={(id) => handleCardClick(id, "movie")}
+             onCardClick={(name) => handleCardClick(name, "movie")}
           />
           <MovieSection
             title="Trending Movies"
             movies={trendingMovies}
-            onCardClick={(id) => handleCardClick(id, "movie")}
+            onCardClick={(name) => handleCardClick(name, "movie")}
           />
           <MovieSection
             title="New Releases"
             movies={newReleaseMovies}
-            onCardClick={(id) => handleCardClick(id, "movie")}
+             onCardClick={(name) => handleCardClick(name, "movie")}
           />
           <MovieSection
             title="Must Watch"
             movies={mustWatchMovies}
-            onCardClick={(id) => handleCardClick(id, "movie")}
+            onCardClick={(name) => handleCardClick(name, "movie")}
           />
         </div>
       )}
@@ -143,22 +141,22 @@ function MoviesAndShows() {
           <MovieSection
             title="Popular Shows"
             movies={popularShows}
-            onCardClick={(id) => handleCardClick(id, "tv")}
+            onCardClick={(name) => handleCardClick(name, "tv")}
           />
           <MovieSection
             title="Trending Shows"
             movies={trendingShows}
-            onCardClick={(id) => handleCardClick(id, "tv")}
+           onCardClick={(name) => handleCardClick(name, "tv")}
           />
           <MovieSection
             title="Currently Airing"
             movies={newReleaseShows}
-            onCardClick={(id) => handleCardClick(id, "tv")}
+           onCardClick={(name) => handleCardClick(name, "tv")}
           />
           <MovieSection
             title="Top Rated Shows"
             movies={mustWatchShows}
-            onCardClick={(id) => handleCardClick(id, "tv")}
+         onCardClick={(name) => handleCardClick(name, "tv")}
           />
         </div>
       )}
@@ -169,7 +167,7 @@ function MoviesAndShows() {
 type MovieSectionProps = {
   title: string;
   movies: Movie[];
-  onCardClick: (id: number) => void;
+  onCardClick: (name: string) => void;
 };
 
 function MovieSection({ title, movies, onCardClick }: MovieSectionProps) {
@@ -248,14 +246,14 @@ function MovieSection({ title, movies, onCardClick }: MovieSectionProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
         {visibleMovies.map((movie) => (
-          <MovieCard
+       <MovieCard
             key={movie.id}
             title={movie.title || movie.name || "Untitled"}
             poster={`${IMG_BASE}${movie.poster_path}`}
             releaseDate={movie.release_date || movie.first_air_date || "Unknown"}
             rating={movie.vote_average}
             popularity={movie.popularity}
-            onClick={() => onCardClick(movie.id)}
+            onClick={() => onCardClick(movie.title || movie.name || "Untitled")}
             vote_count={movie.vote_count}
             variant={
               title.includes("Popular") ? "default" :
@@ -265,6 +263,7 @@ function MovieSection({ title, movies, onCardClick }: MovieSectionProps) {
               "default"
             }
           />
+
         ))}
       </div>
     </section>

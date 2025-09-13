@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import GenrePage from "./pages/GenrePage";
 import MovieShows from "./pages/Movie-ShowsPage";
 import MovieViewPage from "./pages/MovieViewPage";
-// import ShowViewPage from "./pages/ShowViewPage"; // <-- create this later
+import ShowViewPage from "./pages/ShowViewPage"; // <-- create this later
 
 export default function App() {
   return (
@@ -12,8 +12,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/genre/:type/:genreId" element={<GenrePage />} />
         <Route path="/movies-shows" element={<MovieShows />} />
-        <Route path="/movie/:movieId" element={<MovieViewPage />} />
-        {/* <Route path="/tv/:showId" element={<ShowViewPage />} />        tv */}
+        <Route path="/movie/:movieName" element={<MovieViewPage />} />
+        <Route path="/tv/:showName" element={<ShowViewPage />} />        tv
       </Routes>
 
     </Router>

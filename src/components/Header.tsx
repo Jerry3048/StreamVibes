@@ -108,7 +108,7 @@ export default function Navbar() {
             Home
           </NavLink>
           <NavLink
-            to="/movies"
+            to="/movies-shows" 
             onClick={() => setMenuOpen(false)}
             className={({ isActive }) =>
               `block px-3 py-2 rounded-lg transition ${

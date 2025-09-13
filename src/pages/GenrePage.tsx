@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate} from "react-router";
 import axios from "axios";
 import { useMovieStore, type Movie, type TvShow } from "../store/MovieStore";
 
@@ -8,6 +8,12 @@ export default function GenrePage() {
   const [items, setItems] = useState<(Movie | TvShow)[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
+
+  const handleCardClick = (name: string, type: "movie" | "tv") => {
+    const slug = name.toLowerCase().replace(/\s+/g, "-");
+    navigate(`/${type}/${slug}`);
+  };
 
   const {
     movieGenres,
@@ -54,21 +60,28 @@ export default function GenrePage() {
 
       {/* Grid of items */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform"
-          >
-            <img
-              src={`${imgBase}${item.poster_path}`}
-              alt={"title" in item ? item.title : item.name}
-              className="w-full h-80"
-            />
-            <div className="p-2 text-white text-sm font-semibold">
-              {"title" in item ? item.title : item.name}
-            </div>
-          </div>
-        ))}
+      {items.map((item) => {
+            const itemName = "title" in item ? item.title : item.name;
+            const itemType = "title" in item ? "movie" : "tv";
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => handleCardClick(itemName, itemType)}
+                className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform cursor-pointer"
+              >
+                <img
+                  src={`${imgBase}${item.poster_path}`}
+                  alt={itemName}
+                  className="w-full h-80"
+                />
+                <div className="p-2 text-white text-sm font-semibold">
+                  {itemName}
+                </div>
+              </div>
+            );
+          })}
+
       </div>
 
       {/* Pagination */}

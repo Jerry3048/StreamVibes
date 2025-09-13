@@ -28,7 +28,7 @@ export default function MovieBackdrop() {
   }, [maxImages, fetchTrendingPosters]);
 
   return (
-    <div className="relative h-[30vh] md:h-[20vh] w-[90%] lg:w-[95%] overflow-hidden mx-auto rounded-lg shadow-2xs">
+    <div className="relative h-[30vh] md:h-[20vh]  overflow-hidden mx-auto rounded-lg shadow-2xs">
       {/* Background Grid */}
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-20 h-full w-full gap-2">
         {trendingPosters.map((img, i) => (
