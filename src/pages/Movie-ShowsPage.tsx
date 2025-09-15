@@ -1,6 +1,6 @@
 import Header from "../components/Header"
 import Watch from "../components/Watch"
-import Movies from "../components/MoviesCategory"
+import Categories from "../components/Category"
 import TrialBG from "../components/TrialBG"
 import Footer from "../components/Footer"
 function MovieShows() {
@@ -9,7 +9,7 @@ function MovieShows() {
       <Header />
       <Watch />
       <div className="space-y-10 mt-10">
-        <Movies />
+        <Categories />
         <TrialBG />
         <Footer />
       </div>

@@ -1,26 +1,27 @@
-import GenreCard from "./GenreCard";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { FaArrowLeft, FaArrowRight, FaArrowRight as ArrowIcon } from "react-icons/fa";
 import type { Genre, Movie, TvShow } from "../store/MovieStore";
 
-interface GenreSectionProps {
+interface GenresProps {
   title: string;
   description: string;
   genres: Genre[];
   dataByGenre: Record<number, Movie[] | TvShow[]>;
   itemsPerPage: number;
-  type: "movie" | "tv"; 
+  type: "movie" | "tv";
 }
 
-export default function GenreSection({
+export default function Genres({
   title,
   description,
   genres,
   dataByGenre,
   itemsPerPage,
   type,
-}: GenreSectionProps) {
+}: GenresProps) {
   const [startIndex, setStartIndex] = useState(0);
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(genres.length / itemsPerPage);
   const currentPage = Math.floor(startIndex / itemsPerPage);
@@ -81,16 +82,40 @@ export default function GenreSection({
       </div>
 
       {/* Genre Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 xl:gap-6 flex-1">
-        {visibleGenres.map((genre) => (
-          <GenreCard
-            key={genre.id}
-            genreId={genre.id}
-            genreName={genre.name}
-            type={type} // ✅ explicit type
-            items={dataByGenre[genre.id] || []}
-          />
-        ))}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+        {visibleGenres.map((genre) => {
+          const items = dataByGenre[genre.id] || [];
+
+          return (
+            <div
+              key={genre.id}
+              onClick={() => navigate(`/genre/${type}/${genre.id}`)}
+              className="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform"
+            >
+              {/* Preview posters */}
+              <div className="grid grid-cols-2 grid-rows-2 h-40 w-full gap-1">
+                {items.slice(0, 4).map((item) => (
+                  <img
+                    key={item.id}
+                    src={
+                      item.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                        : "https://via.placeholder.com/150"
+                    }
+                    alt={"title" in item ? item.title : item.name}
+                    className="w-full h-full object-cover"
+                  />
+                ))}
+              </div>
+
+              {/* Genre Name */}
+              <div className="p-3 text-center bg-black text-white font-semibold flex items-center justify-between">
+                {genre.name}
+                <ArrowIcon className="text-white" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

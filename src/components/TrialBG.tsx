@@ -42,7 +42,7 @@ export default function MovieBackdrop() {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/70 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-red-500/50 z-10" />
 
       {/* Hero Section */}
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between text-white w-[90%] mx-auto z-20">
