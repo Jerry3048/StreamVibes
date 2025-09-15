@@ -95,8 +95,9 @@ export default function Header() {
         <div className="absolute top-0 right-0 w-[60%] bg-black/90 flex flex-col items-left space-y-4 py-6 md:hidden z-50 p-3 h-[40vh]">
           <a href="/" className="hover:text-red-500 mt-10">Home</a>
           <a href="/movies-shows" className="hover:text-red-500">Movies/Shows</a>
-          <a href="/subscription" className="hover:text-red-500">Subscription</a>
           <a href="/support" className="hover:text-red-500">Support</a>
+          <a href="/subscription" className="hover:text-red-500">Subscription</a>
+          
         </div>
       )}
     </header>

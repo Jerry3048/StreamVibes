@@ -76,7 +76,7 @@ function SupportPage () {
             <img
                 src={Image}
                 alt="Logo"
-                className="w-full object-cover rounded-lg max-h-90"
+                className="w-full object-cover rounded-lg max-h-90 border-2 border-gray-700"
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40 rounded-lg"></div>
@@ -84,7 +84,7 @@ function SupportPage () {
         </div>
 
           {/* Right side - form */}
-          <div className="flex items-center justify-center bg-black rounded-lg">
+          <div className="flex items-center justify-center bg-black rounded-lg mt-10 md:mt-0 p-4">
             <form className="w-full  p-6 rounded-2xl shadow-md space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -137,7 +137,7 @@ function SupportPage () {
                         >
                             {countries.map((country) => (
                             <option
-                                key={country.cca2}
+                                key={country.name.common}
                                 value={`${country.idd.root}${country.idd.suffixes?.[0]}`}
                             >
                                 {country.name.common} ({country.idd.root}{country.idd.suffixes?.[0]})
@@ -170,7 +170,7 @@ function SupportPage () {
         
                   <button
                     type="submit"
-                    className="w-fit bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                    className="w-fit bg-red-600 text-white p-2 rounded hover:bg-red-700"
                   >
                     Send Message
                   </button>
