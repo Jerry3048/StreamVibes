@@ -80,7 +80,7 @@ function MoviesAndShows() {
 
 
   return (
-    <div className="p-6 min-h-screen text-white space-y-12">
+    <div className="lg:p-6 min-h-screen text-white space-y-12">
       {/* Toggle only on small screens */}
       <div className="flex sm:hidden justify-center mb-6 p-2 bg-gray-800 rounded-lg w-fit mx-auto">
         <button

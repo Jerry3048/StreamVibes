@@ -59,7 +59,7 @@ export default function GenrePage() {
       <h1 className="text-3xl font-bold text-white mb-6">{genreName} ({(type ?? "movie").toUpperCase()})</h1>
 
       {/* Grid of items */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-6 gap-2">
       {items.map((item) => {
             const itemName = "title" in item ? item.title : item.name;
             const itemType = "title" in item ? "movie" : "tv";

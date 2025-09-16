@@ -82,7 +82,7 @@ export default function Genres({
       </div>
 
       {/* Genre Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 lg:gap-4">
         {visibleGenres.map((genre) => {
           const items = dataByGenre[genre.id] || [];
 
