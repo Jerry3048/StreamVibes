@@ -81,26 +81,28 @@ function Watch() {
         </p>
 
         {/* Action buttons */}
-        <div className="md:flex space-x-4 mt-6">
-          <button className="bg-red-500 px-6 py-2 rounded flex items-center space-x-2">
-            <FaPlay /> <span>Play Now</span>
-          </button>
-          <button className="bg-black px-2 py-1 rounded flex items-center">
-            <FaPlus />
-          </button>
-          <button
-            onClick={() => setLiked(!liked)}
-            className="bg-black px-2 py-1 rounded flex items-center"
-          >
-            <FaHeart className={liked ? "text-red-500" : ""} />
-          </button>
-          <button
-            onClick={() => setMuted(!muted)}
-            className="bg-black px-2 py-1 rounded flex items-center"
-          >
-            {muted ? <FaVolumeMute /> : <FaVolumeUp />}
-          </button>
-        </div>
+          <div className="md:flex md:space-x-4 mt-6">
+            <button className="bg-red-500 px-6 py-2 rounded flex items-center space-x-2">
+              <FaPlay /> <span>Play Now</span>
+            </button>
+            <div className="flex space-x-2 justify-center mt-4 md:mt-0">
+                <button className="bg-black px-2 py-1 rounded flex items-center">
+                  <FaPlus />
+                </button>
+                <button
+                  onClick={() => setLiked(!liked)}
+                  className="bg-black px-2 py-1 rounded flex items-center"
+                >
+                  <FaHeart className={liked ? "text-red-500" : ""} />
+                </button>
+                <button
+                  onClick={() => setMuted(!muted)}
+                  className="bg-black px-2 py-1 rounded flex items-center"
+                >
+                  {muted ? <FaVolumeMute /> : <FaVolumeUp />}
+                </button>
+            </div>
+          </div>
       </div>
 
       {/* Navigation (arrows + dots) at bottom */}
