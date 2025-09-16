@@ -118,13 +118,13 @@ function SupportPage () {
             <div>
                 Phone Number
                 <div className="flex gap-2 items-center">
-                <div className="flex items-center gap-1 border w-[65px] rounded p-1 bg-black/90">
+                <div className="flex items-center gap-1 border w-[65px] rounded p-2 bg-black/90">
                         {selectedCountry && (
                             <div className="flex items-center gap-2 border">
                             <img
                                 src={selectedCountry.flags.png}
                                 alt={selectedCountry.name.common}
-                                className="w-7 h-4"
+                                className="w-8 h-4"
                             />
                             </div>
                         )}
