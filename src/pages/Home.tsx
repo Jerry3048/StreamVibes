@@ -9,10 +9,10 @@ function Home() {
   return (
     <div className="space-y-30">
       <Background />
-      <MovieGenresSection />
-      <SupportedDevices />
-      <FAQSection />
-      <Pricing />
+     <div id="Cartegory" > <MovieGenresSection /></div>
+      <div id="Devices"><SupportedDevices /></div>
+      <div id="FAQ"><FAQSection/></div>
+      <div id="Pricing"><Pricing /></div>
       <TrialBG />
       <Footer />
     </div>

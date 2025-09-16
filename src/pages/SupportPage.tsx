@@ -84,7 +84,7 @@ function SupportPage () {
         </div>
 
           {/* Right side - form */}
-          <div className="flex items-center justify-center bg-black rounded-lg mt-10 md:mt-0 p-4">
+          <div className="flex items-center justify-center bg-black rounded-lg mt-10 md:mt-0 p-4" id="ContactUs">
             <form className="w-full  lg:p-6 p-2 rounded-2xl shadow-md space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>

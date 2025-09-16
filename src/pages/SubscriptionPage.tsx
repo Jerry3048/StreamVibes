@@ -81,10 +81,10 @@ function Subscription() {
   return (
    <div className="space-y-10">
      <Header/>
-     <Pricing/>
+     <div id="Plans"><Pricing/></div>
      <div className="w-[95%] mx-auto py-10">
         {/* Title Section */}
-        <div className="text-center md:text-left mb-6">
+        <div className="text-center md:text-left mb-6" id="Features">
           <h2 className="text-3xl font-bold text-white mb-4">
             Compare our plans and find the right one for you.
           </h2>

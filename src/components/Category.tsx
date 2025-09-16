@@ -107,22 +107,28 @@ function MoviesAndShows() {
         <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md ">
           Movies
         </h1>
-          <MovieGenresSection />
-          <MovieSection
-            title="Popular Movies"
-            movies={popularMovies}
-             onCardClick={(name) => handleCardClick(name, "movie")}
-          />
-          <MovieSection
-            title="Trending Movies"
-            movies={trendingMovies}
-            onCardClick={(name) => handleCardClick(name, "movie")}
-          />
-          <MovieSection
-            title="New Releases"
-            movies={newReleaseMovies}
-             onCardClick={(name) => handleCardClick(name, "movie")}
-          />
+          <div id="GenresMovies"><MovieGenresSection /></div>
+          <div id="PopularMovies">
+            <MovieSection
+              title="Popular Movies"
+              movies={popularMovies}
+               onCardClick={(name) => handleCardClick(name, "movie")}
+            />
+          </div>
+         <div id="TrendingMovies">
+            <MovieSection
+              title="Trending Movies"
+              movies={trendingMovies}
+              onCardClick={(name) => handleCardClick(name, "movie")}
+            />
+         </div>
+          <div id="NewReleaseMovies">
+            <MovieSection
+              title="New Releases"
+              movies={newReleaseMovies}
+               onCardClick={(name) => handleCardClick(name, "movie")}
+            />
+          </div>
           <MovieSection
             title="Must Watch"
             movies={mustWatchMovies}
@@ -137,27 +143,33 @@ function MoviesAndShows() {
         <h1 className="absolute -top-4 left-4 bg-red-500 px-3 py-1 text-lg font-semibold rounded-md">
           Shows
         </h1>
-          <TvGenresSection />
-          <MovieSection
-            title="Popular Shows"
-            movies={popularShows}
-            onCardClick={(name) => handleCardClick(name, "tv")}
-          />
-          <MovieSection
-            title="Trending Shows"
-            movies={trendingShows}
-           onCardClick={(name) => handleCardClick(name, "tv")}
-          />
+         <div id="GenresShows"> <TvGenresSection /></div>
+         <div id="PopularShows">
+            <MovieSection
+              title="Popular Shows"
+              movies={popularShows}
+              onCardClick={(name) => handleCardClick(name, "tv")}
+            />
+         </div>
+        <div id="TrendingShows">
+            <MovieSection
+              title="Trending Shows"
+              movies={trendingShows}
+             onCardClick={(name) => handleCardClick(name, "tv")}
+            />
+        </div>
           <MovieSection
             title="Currently Airing"
             movies={newReleaseShows}
            onCardClick={(name) => handleCardClick(name, "tv")}
           />
-          <MovieSection
-            title="Top Rated Shows"
-            movies={mustWatchShows}
-         onCardClick={(name) => handleCardClick(name, "tv")}
-          />
+         <div id="TopRatedShows">
+            <MovieSection
+              title="Top Rated Shows"
+              movies={mustWatchShows}
+           onCardClick={(name) => handleCardClick(name, "tv")}
+            />
+         </div>
         </div>
       )}
     </div>

@@ -1,57 +1,66 @@
 import { FaFacebookF, FaTwitter, FaInstagram,} from "react-icons/fa";
+import { useNavigate} from "react-router";
+
+
 export default function Footer() {
+   const navigate = useNavigate();
+
+
   return (
     <footer className="bg-black text-gray-300 py-10 px-6 md:px-16">
     <div className="max-w-[90%] mx-auto">
             <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 justify-center ">
               {/* Column 1 */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Browse</h3>
+                <h3 className="text-white font-semibold mb-4" onClick={()=> navigate("/")}>Home</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li>Home</li>
-                  <li>Categories</li>
-                  <li>Devices</li>
-                  <li>Pricing</li>
-                  <li>FAQ</li>
+                  <li><a href ="#Cartegory">Cartegory</a></li>
+                  <li><a href ="#Devices">Device</a></li>
+                  <li><a href ="#Pricing">Pricing</a></li>
+                  <li><a href ="#FAQ">FAQ</a></li>
                 </ul>
               </div>
       
               {/* Column 2 */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Movies</h3>
+                <h3 className="text-white font-semibold mb-4"
+                onClick={()=> navigate("/movies-shows")}>Movies</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li>Genres</li>
-                  <li>Trending</li>
-                  <li>New Release</li>
-                  <li>Popular</li>
+                   <li><a href ="#GenresMovies">Genres</a></li>
+                   <li><a href ="#TrendingMovies">Trending</a></li>
+                   <li><a href ="#NewReleaseMovies">New Release</a></li>
+                    <li><a href ="#PopularMovies">Popular</a></li>
                 </ul>
               </div>
       
               {/* Column 3 */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Shows</h3>
+                <h3 className="text-white font-semibold mb-4"
+                onClick={()=> navigate("/movies-shows")}>Shows</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li>Genres</li>
-                  <li>Trending</li>
-                  <li>New Release</li>
-                  <li>Popular</li>
+                   <li><a href ="#GenresShows">Genres</a></li>
+                   <li><a href ="#TrendingShows">Trending</a></li>
+                   <li><a href ="#TopRatedShows">Top Rated</a></li>
+                    <li><a href ="#PopularShows">Popular</a></li>
                 </ul>
               </div>
       
               {/* Column 4 */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Support</h3>
+                <h3 className="text-white font-semibold mb-4"
+                onClick={()=> navigate("/support")}>Support</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li>Contact Us</li>
+                  <li><a href ="#ContactUs">Contact Us</a></li>
                 </ul>
               </div>
       
               {/* Column 5 */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Subscripion</h3>
+                <h3 className="text-white font-semibold mb-4"
+                onClick={()=> navigate("/subscription")}>Subscripion</h3>
                 <ul className="space-y-2 text-gray-400 ">
-                  <li>Plans</li>
-                  <li>Features</li>
+                  <li><a href ="#Plans">Plans</a></li>
+                  <li><a href ="#Features">Features</a></li>
                 </ul>
               </div>
       

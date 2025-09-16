@@ -3,10 +3,12 @@ import { useMovieStore } from "../store/MovieStore";
 import Header from "./Header";
 import Logo from "/Logo/Abstract Design.png";
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate} from "react-router";
 
 export default function MovieBackdrop() {
   const { trendingPosters, fetchTrendingPosters } = useMovieStore();
   const [maxImages, setMaxImages] = useState(40);
+  const navigate = useNavigate();
 
   // ✅ Responsive image count
   useEffect(() => {
@@ -69,7 +71,8 @@ export default function MovieBackdrop() {
             StreamVibe, you can enjoy a wide variety of content, including the
             latest blockbusters, classic movies, popular TV shows, and more.
           </p>
-          <button className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-lg font-semibold transition flex items-center mx-auto gap-3">
+          <button className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-lg font-semibold transition flex items-center mx-auto gap-3"
+          onClick={()=> navigate("/movies-shows")}>
             Start Watching
             <FaArrowRight className="text-white" />
           </button>
