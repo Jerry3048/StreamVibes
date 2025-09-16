@@ -81,7 +81,7 @@ function Watch() {
         </p>
 
         {/* Action buttons */}
-        <div className="flex space-x-4 mt-6">
+        <div className="md:flex space-x-4 mt-6">
           <button className="bg-red-500 px-6 py-2 rounded flex items-center space-x-2">
             <FaPlay /> <span>Play Now</span>
           </button>
