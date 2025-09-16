@@ -24,7 +24,7 @@ import {
 import Footer from "../components/Footer";
 import TrialBG from "../components/TrialBG";
 
-const API_KEY = "c83a544dff93b9547ab40c6699cf9c47";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 

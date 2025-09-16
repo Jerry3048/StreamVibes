@@ -5,6 +5,7 @@ import MovieShows from "./pages/Movie-ShowsPage";
 import MovieViewPage from "./pages/MovieViewPage";
 import ShowViewPage from "./pages/ShowViewPage";
 import SupportPage from "./pages/SupportPage";
+import SubscriptionPage from "./pages/SubscriptionPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/movie/:movieName" element={<MovieViewPage />} />
         <Route path="/tv/:showName" element={<ShowViewPage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/subscription" element={<SubscriptionPage />} />
       </Routes>
 
     </Router>

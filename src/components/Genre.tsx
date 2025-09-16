@@ -93,7 +93,7 @@ export default function Genres({
               className="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform"
             >
               {/* Preview posters */}
-              <div className="grid grid-cols-2 grid-rows-2 h-40 w-full gap-1">
+              <div className="grid grid-cols-2 grid-rows-2 h-80 w-full gap-1">
                 {items.slice(0, 4).map((item) => (
                   <img
                     key={item.id}

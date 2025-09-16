@@ -10,13 +10,13 @@ export default function Header() {
     <header className=" text-white  flex items-center justify-between px-6 py-4">
       {/* Left - Logo */}
       
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-1">
           <img
           src={Logo}
           alt="Logo"
           className="w-10 h-10 object-contain"
         />
-          <h1 className="text-xl font-semibold">MovieStream</h1>
+          <h1 className="text-xl font-semibold">StreamVibes</h1>
       </div>
 
       {/* Middle - Desktop Nav */}

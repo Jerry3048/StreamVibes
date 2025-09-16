@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_KEY = "c83a544dff93b9547ab40c6699cf9c47";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
 export interface Genre {

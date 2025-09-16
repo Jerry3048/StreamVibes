@@ -1,16 +1,20 @@
+import { Fragment } from "react";
 import Header from "../components/Header";
 import Pricing from "../components/price";
 import Footer from "../components/Footer";
 import TrialBG from "../components/TrialBG";
 
-type PlanType = "Basic" | "Standard" | "Premium";
-
 interface Feature {
   name: string;
-  plans: Record<PlanType, string | number | boolean>;
+  plans: {
+    Basic: string | number | boolean;
+    Standard: string | number | boolean;
+    Premium: string | number | boolean;
+  };
 }
 
-// Strongly typed feature list
+const plans = ["Basic", "Standard", "Premium"];
+
 const featureList: Feature[] = [
   {
     name: "Price",
@@ -73,61 +77,71 @@ const featureList: Feature[] = [
   },
 ];
 
-function Subscription () {
-  const plans: PlanType[] = ["Basic", "Standard", "Premium"];
-
+function Subscription() {
   return (
    <div className="space-y-10">
-    <Header/>
-    <Pricing/>
-      <div className="overflow-x-auto py-10 w-[95%] mx-auto rounded-lg">
-        <table className="w-full min-w-[600px]">
-          <thead>
-            <tr className="text-lg font-urbanistmedium text-white">
-              <th className="text-left p-4 border border-gray-700/90 bg-black">
-                Features
-              </th>
-              {plans.map((plan) => (
-                <th
-                  key={plan}
-                  className="text-center p-4 border border-gray-700/90 bg-black rounded-lg"
-                >
-                  {plan}
-                  {plan === "Standard" && (
-                    <span className="bg-red-500 ml-2 rounded-lg px-2">
-                      Popular
-                    </span>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {featureList.map((feature, index) => (
-              <tr key={index} className="border-b border-gray-700/90 text-gray-400">
-                <td className="p-4  border border-gray-700/90">
+     <Header/>
+     <Pricing/>
+     <div className="w-[95%] mx-auto py-10">
+        {/* Title Section */}
+        <div className="text-center md:text-left mb-6">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Compare our plans and find the right one for you.
+          </h2>
+          <p className="text-gray-300">
+            StreamVibe offers three different plans to fit your needs: Basic,
+            Standard, and Premium. Compare the features of each plan and choose
+            the one that's right for you.
+          </p>
+        </div>
+
+        {/* Scrollable Grid */}
+        <div className="overflow-x-auto">
+          <div className="grid grid-cols-4 border border-gray-700/90 min-w-[700px] rounded-xl overflow-hidden">
+            {/* Header Row */}
+            <div className="bg-black text-white p-4 font-bold border border-gray-700/90">
+              Features
+            </div>
+            {plans.map((plan) => (
+              <div
+                key={plan}
+                className="bg-black text-white p-4 font-bold border border-gray-700/90"
+              >
+                {plan}
+                {plan === "Standard" && (
+                  <span className="ml-2 bg-red-500 px-2 rounded-lg text-sm">
+                    Popular
+                  </span>
+                )}
+              </div>
+            ))}
+
+            {/* Feature Rows */}
+            {featureList.map((feature, idx) => (
+              <Fragment key={idx}>
+                <div className="p-4 border border-gray-700/90 text-gray-300">
                   {feature.name}
-                </td>
+                </div>
                 {plans.map((plan) => {
-                  const value = feature.plans[plan];
+                  const value = feature.plans[plan as keyof typeof feature.plans];
                   return (
-                    <td
+                    <div
                       key={plan}
-                      className="p-4 border border-gray-700/90"
+                      className="p-4 border border-gray-700/90 text-gray-200"
                     >
                       {typeof value === "boolean" ? (value ? "Yes" : "No") : value}
-                    </td>
+                    </div>
                   );
                 })}
-              </tr>
+              </Fragment>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
-      <TrialBG/>
-      <Footer/>
+    <TrialBG/>
+    <Footer/>
    </div>
   );
-};
+}
 
 export default Subscription;

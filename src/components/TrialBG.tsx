@@ -9,10 +9,11 @@ export default function MovieBackdrop() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
-        setMaxImages(12);
-      } else if (window.innerWidth < 1024) {
+        setMaxImages(20);
+      }
+      else if (window.innerWidth < 1024) {
         setMaxImages(28);
-      } else {
+      }else {
         setMaxImages(40);
       }
     };
@@ -30,13 +31,13 @@ export default function MovieBackdrop() {
   return (
     <div className="relative h-[30vh] md:h-[20vh]  overflow-hidden mx-auto rounded-lg shadow-2xs">
       {/* Background Grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-20 h-full w-full gap-2">
+      <div className="grid grid-cols-6 md:grid-cols-10 xl:grid-cols-20 h-full w-full">
         {trendingPosters.map((img, i) => (
           <img
             key={i}
             src={img}
             alt="Movie poster"
-            className="object-cover w-30 h-20"
+            className="object-cover w-30 h-25"
           />
         ))}
       </div>

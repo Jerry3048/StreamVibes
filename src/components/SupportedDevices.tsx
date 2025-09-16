@@ -43,7 +43,6 @@ export default function SupportedDevices() {
         "StreamVibe is optimized for both Android and iOS smartphones. Download our app from the Google Play Store or the Apple App Store.",
       icon: <FaTabletAlt className="w-6 h-6 text-red-500" />,
     },
-    // You can add more supported devices here (e.g., Tablets, Smart TVs, etc.)
   ];
 
 
