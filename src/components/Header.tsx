@@ -75,7 +75,7 @@ export default function Header() {
       {/* Right - Search + Bell (Always Visible) */}
       <div className="flex items-center space-x-2">
         <button className="p-2 hover:bg-gray-800 rounded-full">
-          <FaSearch className="text-xl" />
+         <NavLink to="/MovieSearch"> <FaSearch className="text-xl" /></NavLink>
         </button>
         <button className="p-2 hover:bg-gray-800 rounded-full">
           <FaBell className="text-xl" />

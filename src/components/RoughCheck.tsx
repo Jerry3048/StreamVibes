@@ -73,6 +73,8 @@ const featureList: Feature[] = [
   },
 ];
 
+
+
 function Subscription () {
   const plans: PlanType[] = ["Basic", "Standard", "Premium"];
 
@@ -80,7 +82,7 @@ function Subscription () {
    <div className="space-y-10">
     <Header/>
     <Pricing/>
-      <div className="overflow-x-auto py-10 w-[95%] mx-auto rounded-lg">
+      <div className="overflow-x-auto py-10 w-[95%] mx-auto rounded-lg  ">
         <table className="w-full min-w-[600px]">
           <thead>
             <tr className="text-lg font-urbanistmedium text-white">
