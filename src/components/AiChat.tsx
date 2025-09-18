@@ -106,22 +106,39 @@ export default function AiChat() {
   }
 
   return (
-    <div style={{ position: "relative", height: "300px", width: "100%"}}>
-      <MainContainer>
-        <ChatContainer>
-          <MessageList
-            scrollBehavior="smooth"
-            typingIndicator={
-              typing ? <TypingIndicator content="AI is typing..." /> : null
-            }
-          >
-            {messages.map((msg, i) => (
-              <Message key={i} model={msg} />
-            ))}
-          </MessageList>
-          <MessageInput placeholder="Ask about movies..." onSend={handleSend} />
-        </ChatContainer>
-      </MainContainer>
-    </div>
+   <div style={{ position: "relative", height: "300px", width: "100%" }}>
+  <MainContainer
+    className="rounded-2xl bg-gray-900 shadow-lg border border-gray-700"
+  >
+    <ChatContainer
+     className="rounded-2xl shadow-lg border p-3">
+      <MessageList
+        scrollBehavior="smooth"
+        typingIndicator={
+          typing ? <TypingIndicator content="AI is typing..." /> : null
+        }
+      >
+        {messages.map((msg, i) => (
+          <Message
+            key={i}
+            model={msg}
+            className={`${
+              msg.sender === "user"
+                ? "bg-blue-500 text-white rounded-2xl px-3 py-2"
+                : "bg-gray-200 text-black rounded-2xl px-3 py-2"
+            }`}
+          />
+        ))}
+      </MessageList>
+
+      <MessageInput
+        className="rounded-full border border-gray-600 bg-gray-800 text-white px-4 py-2"
+        placeholder="Ask about movies..."
+        onSend={handleSend}
+      />
+    </ChatContainer>
+  </MainContainer>
+</div>
+
   );
 }
