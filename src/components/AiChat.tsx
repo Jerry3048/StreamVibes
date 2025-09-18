@@ -106,7 +106,7 @@ export default function AiChat() {
   }
 
   return (
-    <div style={{ position: "relative", height: "500px", width: "100%"}}>
+    <div style={{ position: "relative", height: "300px", width: "100%"}}>
       <MainContainer>
         <ChatContainer>
           <MessageList
